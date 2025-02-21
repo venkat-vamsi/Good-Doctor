@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart'; // For Google Fonts
+import 'package:good_doctor/quiz.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart'; // For Google Fonts
 
 void main() {
-  runApp(MyApp());
+  runApp(ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -333,8 +335,7 @@ class MainContent extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => NearbyCentresScreen()),
+                      MaterialPageRoute(builder: (context) => QuizScreen()),
                     );
                   },
                 ),
