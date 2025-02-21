@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:good_doctor/centers.dart';
+import 'package:good_doctor/chatbot.dart';
 import 'package:good_doctor/quiz.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart'; // For Google Fonts
@@ -442,6 +444,41 @@ class FeatureCard extends StatelessWidget {
   }
 }
 
+class NavigationExample extends StatefulWidget {
+  const NavigationExample({super.key});
+
+  @override
+  State<NavigationExample> createState() => _NavigationExampleState();
+}
+
+class _NavigationExampleState extends State<NavigationExample> {
+  int _selectedIndex = 0;
+
+  // List of screens/pages
+  final List<Widget> _pages = [
+    MyApp(),
+    MapScreen(),
+    const WebViewExample(),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _pages[_selectedIndex], // Display the selected page
+      bottomNavigationBar: FloatingNavigationBar(
+        selectedIndex: _selectedIndex,
+        onTap: _onItemTapped,
+      ),
+    );
+  }
+}
+
 class FloatingNavigationBar extends StatelessWidget {
   final int selectedIndex;
   final Function(int) onTap;
@@ -470,24 +507,29 @@ class FloatingNavigationBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _buildNavItem(Icons.home, 'Home', 0),
-          _buildNavItem(Icons.location_on, 'Centres', 1),
-          _buildNavItem(Icons.chat, 'Chatbot', 2),
+          _buildNavItem(Icons.home, 'Home', MyApp(), context),
+          _buildNavItem(Icons.location_on, 'Centres', MapScreen(), context),
+          _buildNavItem(Icons.chat, 'Chatbot', WebViewExample(), context),
         ],
       ),
     );
   }
 
-  Widget _buildNavItem(IconData icon, String label, int index) {
-    return GestureDetector(
-      onTap: () => onTap(index),
+  Widget _buildNavItem(
+      IconData icon, String label, Widget screen, BuildContext context) {
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => screen),
+        );
+      },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
             icon,
-            color:
-                selectedIndex == index ? const Color(0xFF6DD5FA) : Colors.grey,
+            color: Colors.grey,
             size: 30,
           ),
           const SizedBox(height: 4),
@@ -495,9 +537,7 @@ class FloatingNavigationBar extends StatelessWidget {
             label,
             style: GoogleFonts.comfortaa(
               fontSize: 12,
-              color: selectedIndex == index
-                  ? const Color(0xFF6DD5FA)
-                  : Colors.grey,
+              color: Colors.grey,
             ),
           ),
         ],
@@ -506,7 +546,6 @@ class FloatingNavigationBar extends StatelessWidget {
   }
 }
 
-// Placeholder screens for navigation
 class VRWorldScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -533,16 +572,6 @@ class PanicAttacksInfoScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Panic Attacks Info')),
       body: const Center(child: Text('Panic Attacks Info Screen')),
-    );
-  }
-}
-
-class NearbyCentresScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Nearby Autism Centres')),
-      body: const Center(child: Text('Nearby Autism Centres Screen')),
     );
   }
 }
