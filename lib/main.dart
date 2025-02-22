@@ -1,6 +1,8 @@
+import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:good_doctor/centers.dart';
 import 'package:good_doctor/chatbot.dart';
+import 'package:good_doctor/heart.dart';
 import 'package:good_doctor/quiz.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart'; // For Google Fonts
@@ -290,7 +292,19 @@ class MainContent extends StatelessWidget {
                   color: const Color(0xFFFF6F61),
                   fadeAnimation: cardFadeAnimation,
                   scaleAnimation: cardScaleAnimation,
-                  onPressed: () {
+                  onPressed: () async {
+                    // const String androidPackageName =
+                    //     'com.DefaultCompany.My project(1)';
+
+                    // try {
+                    //   await LaunchApp.openApp(
+                    //     androidPackageName: androidPackageName,
+                    //     openStore:
+                    //         true, // Optional: Opens the Play Store if the app is not installed
+                    //   );
+                    // } catch (e) {
+                    //   print('Error launching app: $e');
+                    // }
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => VRWorldScreen()),
@@ -304,12 +318,22 @@ class MainContent extends StatelessWidget {
                   color: const Color(0xFF6B5B95),
                   fadeAnimation: cardFadeAnimation,
                   scaleAnimation: cardScaleAnimation,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SpeechTherapyScreen()),
-                    );
+                  onPressed: () async {
+                    const String androidPackageName = 'com.example.ar';
+
+                    try {
+                      await LaunchApp.openApp(
+                        androidPackageName: androidPackageName,
+                        openStore:
+                            true, // Optional: Opens the Play Store if the app is not installed
+                      );
+                    } catch (e) {
+                      print('Error launching app: $e');
+                    }
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => speech()),
+                    // );
                   },
                 ),
                 FeatureCard(
@@ -322,8 +346,7 @@ class MainContent extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => PanicAttacksInfoScreen()),
+                      MaterialPageRoute(builder: (context) => Heart()),
                     );
                   },
                 ),
