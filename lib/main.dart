@@ -5,7 +5,7 @@ import 'package:good_doctor/chatbot.dart';
 import 'package:good_doctor/heart.dart';
 import 'package:good_doctor/quiz.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart'; // For Google Fonts
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 void main() {
   runApp(ProviderScope(child: MyApp()));
