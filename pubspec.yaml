@@ -43,6 +43,10 @@ dependencies:
   cupertino_icons: ^1.0.6
   webview_flutter: ^4.8.0
   external_app_launcher: ^4.0.1
+  flutter_map: ^7.0.2
+  geolocator: ^13.0.2
+  aws_signature_v4: ^0.6.3
+  just_audio: ^0.9.46
 
 dev_dependencies:
   flutter_test:
@@ -68,11 +72,19 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-      - assets/images/vr_kid.jpeg
-      - assets/images/heart_rate.jpeg
-      - assets/images/speech.jpeg
-      - assets/images/puzzle.jpeg
-      - assets/3d_models/alphabet_asset.glb
+    - assets/images/logo.png
+    - assets/images/kid.png
+    - assets/images/vr_kid.jpeg
+    - assets/images/heart_rate.jpeg
+    - assets/images/speech.jpeg
+    - assets/images/puzzle.jpeg
+    - assets/3d_models/alphabet_asset.glb
+    - assets/images/vr_world_bg.png
+    - assets/images/speech_bg.png
+    - assets/images/heart_rate_bg.png
+    - assets/images/role_play_quiz_bg.png
+    - assets/images/doraemonn.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -17,14 +17,14 @@ class _WebViewExampleState extends State<Heart> {
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted) // Enable JavaScript
       ..loadRequest(Uri.parse(
-          'https://abp-test.streamlit.app/')); // Replace with your local server URL
+          'https://ibmaws.streamlit.app/')); // Replace with your local server URL
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Local Website'),
+        title: const Text('Panic Attack Detector'),
       ),
       body: WebViewWidget(
         controller: _controller,

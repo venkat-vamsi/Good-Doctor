@@ -17,7 +17,7 @@ class _WebViewExampleState extends State<WebViewExample> {
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted) // Enable JavaScript
       ..loadRequest(Uri.parse(
-          'http://192.168.0.72:5000')); // Replace with your local server URL
+          'http://192.168.29.251:5000')); // Replace with your local server URL
   }
 
   @override

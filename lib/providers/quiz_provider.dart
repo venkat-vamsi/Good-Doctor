@@ -35,9 +35,7 @@ class QuizState {
 }
 
 class QuizNotifier extends StateNotifier<QuizState> {
-  final Ref _ref;
-
-  QuizNotifier(this._ref) : super(QuizState());
+  QuizNotifier(Ref ref) : super(QuizState());
 
   Future<void> fetchQuiz() async {
     // Reset state before fetching a new quiz

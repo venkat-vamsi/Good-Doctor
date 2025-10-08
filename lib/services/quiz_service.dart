@@ -4,8 +4,8 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 
 class QuizService {
   static const String _apiKey =
-      'AIzaSyAVKSesFx5S5oXC6UJWJE76N5RDueHem98'; // Your key
-  final _model = GenerativeModel(model: 'gemini-1.5-flash', apiKey: _apiKey);
+      'AIzaSyDVrjJ8D6fnffYJEVEp3Kri6hh9aLke0nI'; // Your key
+  final _model = GenerativeModel(model: 'gemini-2.5-flash', apiKey: _apiKey);
 
   Future<QuizData> generateDailyQuiz() async {
     // Add a random topic or context to the prompt
