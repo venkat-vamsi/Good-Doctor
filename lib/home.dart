@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:good_doctor/ar.dart';
 import 'package:good_doctor/centers.dart';
-import 'package:good_doctor/heart.dart';
+import 'package:good_doctor/panic_input_page.dart';
 import 'package:good_doctor/quiz.dart';
 import 'package:good_doctor/speech.dart';
 import 'package:good_doctor/vr.dart'; // Ensure path is correct
@@ -145,8 +145,10 @@ Widget _buildHomeScreenContent(BuildContext context) {
                   }),
                   _buildCategoryIcon(
                       Icons.favorite, 'Heart', const Color(0xFF00BCD4), () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Heart()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PanicInputPage()));
                   }),
                   _buildCategoryIcon(
                       Icons.quiz, 'Quiz', const Color(0xFF4CAF50), () {
@@ -173,8 +175,8 @@ Widget _buildHomeScreenContent(BuildContext context) {
                   'Heart Rate Monitoring',
                   'assets/images/heart_rate_bg.png',
                   const Color(0xFF00BCD4), () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Heart()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => PanicInputPage()));
               }),
               const SizedBox(height: 16),
               _buildFeatureCard(

@@ -4,12 +4,13 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 
 class QuizService {
   static const String _apiKey =
-      'AIzaSyDVrjJ8D6fnffYJEVEp3Kri6hh9aLke0nI'; // Your key
-  final _model = GenerativeModel(model: 'gemini-2.5-flash', apiKey: _apiKey);
+      'AIzaSyCzFeDXnowi1BWdVCtQ4Rtb5xmNDfeFGcU'; // Your key
+  final _model =
+      GenerativeModel(model: 'gemini-2.5-flash-lite', apiKey: _apiKey);
 
   Future<QuizData> generateDailyQuiz() async {
-    // Add a random topic or context to the prompt
-    final randomTopic = _getRandomTopic(); // Randomly select a topic
+    //random topic or context to the prompt
+    final randomTopic = _getRandomTopic();
     final prompt = '''
     Generate a role-play scenario for an autistic child to practice real-life conversations.
     The scenario should be related to $randomTopic.

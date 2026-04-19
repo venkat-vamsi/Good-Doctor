@@ -1,7 +1,48 @@
+import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter/material.dart';
 
-class VRWorldScreen extends StatelessWidget {
+// Converted to a StatefulWidget to use the initState lifecycle method.
+class VRWorldScreen extends StatefulWidget {
   const VRWorldScreen({super.key});
+
+  @override
+  State<VRWorldScreen> createState() => _VRWorldScreenState();
+}
+
+class _VRWorldScreenState extends State<VRWorldScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Automatically trigger the app launch when this screen is first built.
+    _launchVRApp();
+  }
+
+  // Launch logic adapted for the VR App
+  Future<void> _launchVRApp() async {
+    // --- IMPORTANT ---
+    // Change this to the package name of your Unity VR application
+    const String androidPackageName = 'com.unity3d.player.UnityPlayerActivity';
+
+    try {
+      await LaunchApp.openApp(
+        androidPackageName: androidPackageName,
+        // If the app is not installed, this will open the Google Play Store page.
+        openStore: false,
+      );
+    } catch (e) {
+      // Log the error for debugging and handle it gracefully.
+      print('Error launching app: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Failed to open VR app. Please make sure it is installed.',
+            ),
+          ),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,12 +93,18 @@ class VRWorldScreen extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 30),
+                      // Added the CircularProgressIndicator from your AR logic
+                      const CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      ),
+                      const SizedBox(height: 20),
                       // Descriptive text with a clean style
                       const Text(
-                        'Adventure Awaits',
+                        'Opening VR experience...',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 28,
+                          fontSize:
+                              24, // Adjusted slightly to fit the loading context
                           fontWeight: FontWeight.bold,
                           letterSpacing: 1.2,
                         ),

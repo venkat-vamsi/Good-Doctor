@@ -38,7 +38,6 @@ class MyApp extends StatelessWidget {
 
 //
 // --- Data Models ---
-// These classes represent the structure of the data from our backend.
 //
 
 class RecordingSession {
@@ -59,7 +58,6 @@ class RecordingSession {
     List<SpeechRecording> recordings =
         recordingsList.map((i) => SpeechRecording.fromJson(i)).toList();
 
-    // Sort recordings within the session by timestamp, latest first
     recordings.sort((a, b) => b.timestamp.compareTo(a.timestamp));
 
     return RecordingSession(
@@ -95,14 +93,12 @@ class SpeechRecording {
 }
 
 //
-// --- API Service ---
-// This class handles fetching the data from your live AWS backend.
+// --- API Service (Final Corrected Version) ---
 //
 
 class ApiService {
-  // Your live URL from API Gateway.
   final String _apiUrl =
-      'https://1hx2s2h204.execute-api.us-east-1.amazonaws.com/prod/sessions';
+      'https://qebd3zobm4.execute-api.us-east-1.amazonaws.com/prod/sessions';
 
   Future<List<RecordingSession>> getRecordingSessions() async {
     print("Attempting to fetch REAL data from your live AWS backend...");
@@ -110,23 +106,23 @@ class ApiService {
       final response = await http.get(Uri.parse(_apiUrl));
 
       if (response.statusCode == 200) {
-        // Handle case where body might be empty but successful
-        if (response.body.isEmpty) {
-          print(
-              "✅ Successfully fetched data from AWS, but the response body is empty. Returning empty list.");
-          return [];
-        }
+        // --- THIS IS THE FINAL FIX ---
+        // 1. First, decode the outer JSON object.
+        final Map<String, dynamic> apiResponse = json.decode(response.body);
 
-        final List<dynamic> sessionsJson = json.decode(response.body);
-        print("✅ Successfully fetched data from AWS!");
+        // 2. Get the 'body' key, which contains our data as a STRING.
+        final String bodyString = apiResponse['body'];
+
+        // 3. Second, decode the body string to get our actual list.
+        final List<dynamic> sessionsJson = json.decode(bodyString);
+
+        print("✅ Successfully fetched and parsed data from AWS!");
 
         List<RecordingSession> sessions = sessionsJson
             .map((json) => RecordingSession.fromJson(json))
             .toList();
 
-        // Sort sessions by date, latest first
         sessions.sort((a, b) => b.sessionDate.compareTo(a.sessionDate));
-
         return sessions;
       } else {
         print(
@@ -136,9 +132,9 @@ class ApiService {
             'Failed to load sessions. The server returned an error.');
       }
     } catch (e) {
-      print("❌ A network or other error occurred: $e");
+      print("❌ A network or parsing error occurred: $e");
       throw Exception(
-          'Could not connect to the server. Please check your internet connection and the API URL.');
+          'Could not process the server response. Please check the API and your internet connection.');
     }
   }
 }
@@ -147,7 +143,6 @@ class ApiService {
 // --- UI Screens ---
 //
 
-// Displays the list of all recording sessions
 class SessionsScreen extends StatefulWidget {
   const SessionsScreen({super.key});
 
@@ -242,7 +237,6 @@ class _SessionsScreenState extends State<SessionsScreen> {
   }
 }
 
-// Displays the details of a single session (recordings and text)
 class SessionDetailScreen extends StatelessWidget {
   final RecordingSession session;
   const SessionDetailScreen({super.key, required this.session});
@@ -303,7 +297,6 @@ class SessionDetailScreen extends StatelessWidget {
 // --- Reusable Widgets ---
 //
 
-// A widget that plays audio from a URL
 class AudioPlayerWidget extends StatefulWidget {
   final String audioUrl;
   const AudioPlayerWidget({super.key, required this.audioUrl});
@@ -325,7 +318,6 @@ class _AudioPlayerWidgetState extends State<AudioPlayerWidget> {
   Future<void> _initAudioPlayer() async {
     try {
       setState(() => _isLoading = true);
-      // The pre-signed URL from S3 can be used directly here.
       await _audioPlayer.setUrl(widget.audioUrl);
     } catch (e) {
       print("Error loading audio source: $e");
